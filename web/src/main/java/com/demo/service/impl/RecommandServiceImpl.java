@@ -79,11 +79,12 @@ public class RecommandServiceImpl implements RecommandService {
 	public List<ProductDto> recommandByHotList() {
 		// 获取top榜单
 		List<String> topList = getDefaultTop();
-		int topSize = topList.size();
+//		int topSize = topList.size();
 		// 拿到产品详情表
 		List<ContactEntity> contactEntities = contactService.selectByIds(topList);
 		// 拿到产品基本信息表
 		List<ProductEntity> productEntities = productService.selectByIds(topList);
+		int topSize = Math.min(Math.min(topList.size(), contactEntities.size()), productEntities.size());
 		return fillProductDto(topList, contactEntities, productEntities, topSize);
 	}
 
